@@ -5,8 +5,8 @@ const
   express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()), // creates express http server
-  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-
+  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
+  checkCommand = require('helpers/mainHelper');
 
 // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
@@ -24,7 +24,10 @@ app.post('/webhook', (req, res) => {
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
       if(webhook_event.charAt(0)==="/"){
-        if(webhook_event.split())
+        var espacio = webhook_event.indexOf(" ");
+        var command = espacio!=-1 ? webhook_event.slice(1,espacio) : webhook_event.slice(1) ;
+        var params = espacio!=-1 ? webhook_event.slice(espacio) : "";
+        checkCommand(command,params);
       }
     });
     

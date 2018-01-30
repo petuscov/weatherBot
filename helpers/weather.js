@@ -1,3 +1,4 @@
+"use strict";
 /*
 *
 * @params: de momento ninguno, en un futuro la ciudad sobre la que realizar la petición
@@ -40,4 +41,8 @@ function callweather(){
     return message; //mensaje de error
   });
   
+}
+
+module.exports = {
+  callWeather : callweather
 }
