@@ -4,8 +4,8 @@
 const
   express = require('express'),
   bodyParser = require('body-parser'),
-  app = express().use(bodyParser.json()); // creates express http server
-
+  app = express().use(bodyParser.json()), // creates express http server
+  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 
 // Creates the endpoint for our webhook 
@@ -40,7 +40,7 @@ app.post('/webhook', (req, res) => {
 app.get('/webhook', (req, res) => {
 
   // Your verify token. Should be a random string.
-  let VERIFY_TOKEN = "cadenamia"
+  let VERIFY_TOKEN = PAGE_ACCESS_TOKEN;
     
   // Parse the query params
   let mode = req.query['hub.mode'];
