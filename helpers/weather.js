@@ -1,4 +1,6 @@
 "use strict";
+ var request = require('request');
+
 /*
 *
 * @params: de momento ninguno, en un futuro la ciudad sobre la que realizar la petición
