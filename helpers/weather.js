@@ -34,8 +34,8 @@ function callweather(){
     for(var i=0;i<3;i++){
       var obj = "";
       obj += "Día "+ (i+1) +": ";
-      obj += parseInt(JSON.stringify(response.list[i].main.temp))-273,15;
-      obj += " Cº, con tiempo " + JSON.stringify(response.list[i].weather[0].main);
+      obj += parseInt((response.list[i].main.temp))-273,15;
+      obj += " Cº, con tiempo " + response.list[i].weather[0].main;
       datosApi.push(obj);
     }
     message = datosApi;
