@@ -39,14 +39,13 @@ function callweather(){
       datosApi.push(obj);
     }
     message = datosApi;
-    console.log(message);
     return message;
   }).catch(function(result){
     message = "Wops, algo ha cascado...";
     console.log(result);
     return message; //mensaje de error
   });
-  
+  return promesa;
 }
 
 module.exports = {

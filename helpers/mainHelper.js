@@ -3,10 +3,17 @@ const weather = require("./weather");
 
 function checkCommand(command, argument){
   var response = "";
+  var promesa = Promise.resolve();
   if(command === "weather"){
-    response = weather.callWeather();//pasar el argumento
+    promesa = weather.callWeather();//pasar el argumento
   }
-  return response;
+  
+  
+  return promesa.then(function(response){
+    return response;
+  }).catch(function(result){
+    return "something weird happened: "+ result;
+  });
 }
 
 module.exports = {

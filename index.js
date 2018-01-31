@@ -16,6 +16,7 @@ app.post('/webhook', (req, res) => {
   // Checks this is an event from a page subscription
   if (body.object === 'page') {
     var response = "";
+    var promesa = Promise.resolve();
     // Iterates over each entry - there may be multiple if batched
     body.entry.forEach(function(entry) {
 
@@ -24,16 +25,24 @@ app.post('/webhook', (req, res) => {
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
       let message = webhook_event.message;
+      
       if(message.charAt(0)==="/"){
         var espacio = message.indexOf(" ");
         var command = espacio!=-1 ? message.slice(1,espacio) : message.slice(1) ;
         var params = espacio!=-1 ? message.slice(espacio) : "";
-        response = mainHelper.checkCommand(command,params);
+        promesa = mainHelper.checkCommand(command,params);
       }
     });
     
-    // Returns a '200 OK' response to all requests
-    res.status(200).send(response);
+    promesa.then(function(message){
+       // Returns a '200 OK' response to all requests
+      console.log(message);
+      res.status(200).send(message);
+    }).catch(function(message){
+      // Returns a '200 OK' response to all requests
+      res.status(200).send(message);
+    });
+   
   } else {
     // Returns a '404 Not Found' if event is not from a page subscription
     console.log("nah");
