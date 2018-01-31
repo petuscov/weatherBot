@@ -2,10 +2,11 @@
 const weather = require("./weather");
 
 function checkCommand(command, argument){
+  var response = "";
   if(command === "weather"){
-    weather.callWeather();//pasar el argumento
-    console.log(command +" , "+ argument);
+    response = weather.callWeather();//pasar el argumento
   }
+  return response;
 }
 
 module.exports = {

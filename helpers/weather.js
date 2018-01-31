@@ -1,5 +1,5 @@
 "use strict";
- var request = require('request');
+ var http = require('http');
 
 /*
 *
@@ -11,31 +11,35 @@ function callweather(){
   var direccion = "http://api.openweathermap.org/data/2.5/forecast?q="+ciudad+"&cnt=3&&APPID=e8638bc5d9a41ddc3c698bf4eba969a0";
   var message = "";
   var promesa = new Promise(function(resolve,reject){
-    $.ajax({url:direccion,
-      xhrFields: {
-        withCredentials: true
-     },
-      //dataType: 'jsonp',
-      done:function(result){
-        var datosApi = "";
-
-        for(var i=0;i<3;i++){
-          datosApi += "Día "+ (i+1) +": ";
-            datosApi += parseInt(JSON.stringify(result.list[i].main.temp))-273,15;
-            datosApi += " Cº, con tiempo " + JSON.stringify(result.list[i].weather[0].main) + "<br>";
-        }
-        resolve(datosApi);
-     },
-     fail:function(result){
-       reject(result);
-     },
-     error: function(xhr, status, error) {
-       reject(error);
-     },
-  });
+    http.get(direccion, (resp) => {
+      let data = '';
+ 
+      // A chunk of data has been recieved.
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+ 
+      // The whole response has been received. Print out the result.
+      resp.on('end', () => {
+        resolve(JSON.parse(data));
+      });
+ 
+      }).on("error", (err) => {
+        reject("Error: " + err.message);
+      });
+ 
   }).then(function(response){
-
-    message = response;
+    var datosApi = [];
+    
+    for(var i=0;i<3;i++){
+      var obj = "";
+      obj += "Día "+ (i+1) +": ";
+      obj += parseInt(JSON.stringify(response.list[i].main.temp))-273,15;
+      obj += " Cº, con tiempo " + JSON.stringify(response.list[i].weather[0].main);
+      datosApi.push(obj);
+    }
+    message = datosApi;
+    console.log(message);
     return message;
   }).catch(function(result){
     message = "Wops, algo ha cascado...";
