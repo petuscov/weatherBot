@@ -47,7 +47,7 @@ app.post('/webhook', (req, res) => {
     }).catch(function(message){
       
       
-      //console.log(message);
+      console.log("error: " + message);
       // Returns a '200 OK' response to all requests
       //res.status(200).send(message);
     });
