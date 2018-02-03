@@ -101,18 +101,21 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 //-------UTILITIES FUNCTIONS-----------//
 
 function sendResponse(message,recipient){
-  var sendApiUrl = "v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
+  var sendApiPath = "v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
   var response = {};
   response.messaging_type = "RESPONSE";
   response.recipient = {}; response.recipient.id = recipient; 
   response.message = {}; response.message.text = message; 
+  //console.log(response);
+  //response = JSON.stringify(response);
+  //console.log(response);
   var options = {
-    host: "https://graph.facebook.com",
-    path: sendApiUrl,
+    host: "graph.facebook.com",
+    path: sendApiPath,
+    contentType: 'application/json',
     port: '80',
     method: 'POST',
     body: response
   }
-  console.log(sendApiUrl);
   https.request(options,(res)=> {});
 }
