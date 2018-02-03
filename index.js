@@ -7,7 +7,8 @@ const
   app = express().use(bodyParser.json()), // creates express http server
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
   //checkCommand = require('helpers/mainHelper');
-  mainHelper = require("./helpers/mainHelper");
+  mainHelper = require("./helpers/mainHelper"),
+  https = require("https");
 // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
   
@@ -35,12 +36,20 @@ app.post('/webhook', (req, res) => {
     });
     
     promesa.then(function(message){
-       // Returns a '200 OK' response to all requests
-      console.log(message);
-      res.status(200).send(message);
-    }).catch(function(message){
+      var sendApi = "https://graph.facebook.com/v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
+      var options = {
+        hostname: 'localhost',
+      }
+      https.post(options, (res)=> {});
+      //console.log(message);
       // Returns a '200 OK' response to all requests
-      res.status(200).send(message);
+      //res.status(200).send(message);
+    }).catch(function(message){
+      
+      
+      //console.log(message);
+      // Returns a '200 OK' response to all requests
+      //res.status(200).send(message);
     });
    
   } else {
