@@ -17,16 +17,17 @@ app.post('/webhook', (req, res) => {
   // Checks this is an event from a page subscription
   if (body.object === 'page') {
     var response = "";
+    var userId = "";
     var promesa = Promise.resolve("not handled");
-    // Iterates over each entry - there may be multiple if batched
-    body.entry.forEach(function(entry) {
+    // Iterates over each entry - there may be multiple if batched ???
+    body.entry.forEach(function(entry) {//???
 
       // Gets the message. entry.messaging is an array, but 
       // will only ever contain one message, so we get index 0
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
       let message = webhook_event.message.text;
-      
+      //userId= webhook_event.;
       if(message.charAt(0)==="/"){
         var espacio = message.indexOf(" ");
         var command = espacio!=-1 ? message.slice(1,espacio) : message.slice(1) ;
@@ -36,11 +37,10 @@ app.post('/webhook', (req, res) => {
     });
     
     promesa.then(function(message){
-      var sendApi = "https://graph.facebook.com/v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
-      var options = {
-        hostname: 'localhost',
-      }
-      https.post(options, (res)=> {});
+      
+      //sendResponse(message,userId); 
+      
+     
       //console.log(message);
       // Returns a '200 OK' response to all requests
       //res.status(200).send(message);
@@ -96,3 +96,16 @@ app.get('/', (req, res) => {
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+
+
+//-------UTILITIES FUNCTIONS-----------//
+
+function sendResponse(message,recipient){
+  var sendApiUrl = "https://graph.facebook.com/v2.6/me/messages?access_token=" + process.env.ACCESS_TOKEN;
+  
+  var options = {
+    
+  }
+  
+  https.post(options,(res)=> {});
+}
