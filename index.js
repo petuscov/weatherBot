@@ -25,7 +25,7 @@ app.post('/webhook', (req, res) => {
       // Gets the message. entry.messaging is an array, but 
       // will only ever contain one message, so we get index 0
       let webhook_event = entry.messaging[0];
-      console.log(webhook_event);
+      //console.log(webhook_event);
       let message = webhook_event.message.text;
       userId= webhook_event.sender.id;
       if(message.charAt(0)==="/"){
@@ -113,9 +113,9 @@ function sendResponse(message,recipient){
     host: "graph.facebook.com",
     path: sendApiPath,
     contentType: 'application/json',
-    port: '80',
+    port: '443',
     method: 'POST',
     body: response
   }
-  https.request(options,(res)=> {});
+  https.request(options,(res)=> {console.log("sended");});
 }
