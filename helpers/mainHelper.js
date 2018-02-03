@@ -3,7 +3,7 @@ const weather = require("./weather");
 
 function checkCommand(command, argument){
   var response = "";
-  var promesa = Promise.resolve();
+  var promesa = Promise.resolve("command not recognised");
   if(command === "weather"){
     promesa = weather.callWeather();//pasar el argumento
   }

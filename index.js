@@ -16,7 +16,7 @@ app.post('/webhook', (req, res) => {
   // Checks this is an event from a page subscription
   if (body.object === 'page') {
     var response = "";
-    var promesa = Promise.resolve();
+    var promesa = Promise.resolve("not handled");
     // Iterates over each entry - there may be multiple if batched
     body.entry.forEach(function(entry) {
 
@@ -24,7 +24,7 @@ app.post('/webhook', (req, res) => {
       // will only ever contain one message, so we get index 0
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
-      let message = webhook_event.message;
+      let message = webhook_event.message.text;
       
       if(message.charAt(0)==="/"){
         var espacio = message.indexOf(" ");
