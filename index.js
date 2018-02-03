@@ -27,7 +27,7 @@ app.post('/webhook', (req, res) => {
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
       let message = webhook_event.message.text;
-      //userId= webhook_event.;
+      userId= webhook_event.sender.id;
       if(message.charAt(0)==="/"){
         var espacio = message.indexOf(" ");
         var command = espacio!=-1 ? message.slice(1,espacio) : message.slice(1) ;
@@ -38,7 +38,7 @@ app.post('/webhook', (req, res) => {
     
     promesa.then(function(message){
       
-      //sendResponse(message,userId); 
+      sendResponse(message,userId); 
       
      
       //console.log(message);
@@ -101,11 +101,18 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 //-------UTILITIES FUNCTIONS-----------//
 
 function sendResponse(message,recipient){
-  var sendApiUrl = "https://graph.facebook.com/v2.6/me/messages?access_token=" + process.env.ACCESS_TOKEN;
-  
+  var sendApiUrl = "v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
+  var response = {};
+  response.messaging_type = "RESPONSE";
+  response.recipient = {}; response.recipient.id = recipient; 
+  response.message = {}; response.message.text = message; 
   var options = {
-    
+    host: "https://graph.facebook.com",
+    path: sendApiUrl,
+    port: '80',
+    method: 'POST',
+    body: response
   }
-  
-  https.post(options,(res)=> {});
+  console.log(sendApiUrl);
+  https.request(options,(res)=> {});
 }
