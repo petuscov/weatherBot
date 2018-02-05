@@ -19,6 +19,7 @@ app.post('/webhook', (req, res) => {
     var response = "";
     var userId = "";
     var promesa = Promise.resolve("not handled");
+    if(!body.entry){return;}else{console.log(body.entry);}
     // Iterates over each entry - there may be multiple if batched ???
     body.entry.forEach(function(entry) {//???
 
@@ -63,7 +64,7 @@ app.post('/webhook', (req, res) => {
 //Initial verification
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
-
+  console.log("initial verification");
   // Your verify token. Should be a random string.
   let VERIFY_TOKEN = PAGE_ACCESS_TOKEN;
     
@@ -74,7 +75,7 @@ app.get('/webhook', (req, res) => {
     
   // Checks if a token and mode is in the query string of the request
   if (mode && token) {
-  
+    console.log("TOKEN: " + token);
     // Checks the mode and token sent is correct
     if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       
