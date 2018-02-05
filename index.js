@@ -109,6 +109,7 @@ function sendResponse(message,recipient){
   //console.log(response);
   //response = JSON.stringify(response);
   //console.log(response);
+  
   var options = {
     host: "graph.facebook.com",
     path: sendApiPath,
