@@ -4,6 +4,9 @@
 const
   express = require('express'),
   bodyParser = require('body-parser'),
+  fs = require('fs'), 
+  privateKey = fs.readFileSync('privkey.pem'),
+  certificate = fs.readFileSync('cert.pem'),
   app = express().use(bodyParser.json()), // creates express http server
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
   //checkCommand = require('helpers/mainHelper');
@@ -96,7 +99,11 @@ app.get('/', (req, res) => {
 });
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+var port =process.env.PORT || 3000; 
+https.createServer({
+   key: privateKey,
+   cert: certificate
+}, app).listen(port, () => console.log('webhook is listening in port: '+ port));
 
 
 //-------UTILITIES FUNCTIONS-----------//
