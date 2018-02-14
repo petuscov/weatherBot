@@ -99,6 +99,7 @@ app.get('/', (req, res) => {
 });
 
 // Sets server port and logs message on success
+
 var port =process.env.PORT || 3000; 
 https.createServer({
    key: privateKey,
