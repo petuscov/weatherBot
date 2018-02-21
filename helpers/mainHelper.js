@@ -2,11 +2,11 @@
 const weather = require("./weather");
 
 //de momento no hacemos uso de userPsid
-function checkCommand(userPsid,command, arguments){
+function checkCommand(userPsid,command, params){
   var response = "";
   var promesa = Promise.resolve("command not recognised");
   if(command === "weather"){
-    promesa = weather.callWeather(arguments,false);
+    promesa = weather.callWeather(params,false);
   }
   return promesa;
   /*
