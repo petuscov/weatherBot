@@ -6,7 +6,7 @@ const
   bodyParser = require('body-parser'),
   fs = require('fs'), 
   privateKey = fs.readFileSync('privkey.pem'),
-  certificate = fs.readFileSync('cert.pem'),
+  certificate = fs.readFileSync('fullchain.pem'),
   app = express().use(bodyParser.json()), // creates express http server
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
   //checkCommand = require('helpers/mainHelper');
