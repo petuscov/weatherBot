@@ -1,2 +1,5 @@
 cert.pem
 privkey.pem
+node_modules
+package-lock.json
+package.json
