@@ -20,9 +20,13 @@ function checkCommand(userPsid,command, params){
 function processMessage(userPsid, message){
   var response = "";
   var promesa = Promise.resolve("message not supported");
+  var arr = []; arr.push("Hola, mis mensajes son limitados");
+  arr.push(":D");
+  promesa = Promise.resolve(arr);
+  /*
   if(message === "Si"){
     promesa = weather.processMessage();
-  }
+  }*/
   return promesa;
 }
 
