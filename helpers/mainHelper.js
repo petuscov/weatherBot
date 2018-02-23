@@ -42,5 +42,6 @@ function handlePostback(userPsid, received_postback){
 
 module.exports = {
   checkCommand : checkCommand,
-  handlePostback : handlePostback
+  handlePostback : handlePostback,
+  processMessage : processMessage
 }
