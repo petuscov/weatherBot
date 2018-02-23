@@ -38,6 +38,7 @@ app.post('/webhook', (req, res) => {
           var params = espacio!=-1 ? message.slice(espacio) : "";
           promesa = mainHelper.checkCommand(userPsid,command,params);
         }else{
+          console.log("processing received msg");
           promesa = mainHelper.processMessage(userPsid,command,message);
         }
         
@@ -111,6 +112,7 @@ https.createServer({
 //-------UTILITIES FUNCTIONS-----------//
 
 function sendResponse(message,recipient){
+  console.log("sending msg");
   var sendApiPath = "v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
   var response = {};
   response.messaging_type = "RESPONSE";
