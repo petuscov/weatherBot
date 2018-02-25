@@ -147,9 +147,9 @@ function sendResponse(message,recipient){
         body += data;
       });
       res.on("end", () => {
-        body = JSON.parse(body);
         if(res.statusCode === 200){
           console.log("response status OK");
+          console.log(body);
           resolve(res);
         }else{
           console.log("statusCode: "+ res.statusCode);
