@@ -134,7 +134,7 @@ function sendResponse(message,recipient){
     headers: {
       'contentType': 'application/json'
     },
-    port: '443',
+    //port: '443',
     method: 'POST',
     key: privateKey,
     cert: certificate,
