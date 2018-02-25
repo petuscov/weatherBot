@@ -156,12 +156,12 @@ function sendResponse(message,recipient){
           reject("bad response status");
         }
       });
+    });
     req.on("error", function(err){
       console.log(err);
       reject("error in request");
     });
     req.end();
-    });
   });
   return promesa;
   
