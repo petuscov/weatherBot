@@ -139,14 +139,27 @@ function sendResponse(message,recipient){
     body: response
   }
   var promesa = new Promise(function(resolve,reject){
-    https.request(options,function(err,res,body){
-      if(!err && res.statusCode === 200){
-        console.log("response: "+res);
-        resolve(res);
-      }else{
-        console.log("statusCode: "+ res.statusCode +", err: "+err);
-        reject(err);
-      }
+    console.log("sending request");
+    https.request(options,function(res){
+      res.setEncoding("utf8");
+      let body = "";
+      res.on("data", data => {
+        body += data;
+      });
+      res.on("end", () => {
+        body = JSON.parse(body);
+        if(res.statusCode === 200){
+          console.log("response status OK");
+          resolve(res);
+        }else{
+          console.log("statusCode: "+ res.statusCode);
+          reject("bad response status");
+        }
+      });
+      res.on("error", function(err){
+        console.log(err);
+        reject("error in request");
+      });
     });
   });
   return promesa;
