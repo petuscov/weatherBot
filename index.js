@@ -38,7 +38,7 @@ app.post('/webhook', (req, res) => {
           var params = espacio!=-1 ? message.slice(espacio) : "";
           promesa = mainHelper.checkCommand(userPsid,command,params);
         }else{
-          console.log("Processing received msg");
+          //console.log("Processing received msg");
           promesa = mainHelper.processMessage(userPsid,command,message);
         }
         
@@ -48,8 +48,10 @@ app.post('/webhook', (req, res) => {
       
       promesa.then(function(message){
         var nueva = Promise.resolve();
+        console.log("msg send attemp...");
         nueva = sendResponse(message[0],userPsid); 
         if(message[1]){ //si tras procesar comando/mensaje/postback bot desea enviar 2 mensajes consecutivos.
+          console.log("second msg send attemp...");
           nueva = nueva.then(function(){
             return sendResponse(message[1],userPsid);
           })
@@ -112,7 +114,7 @@ https.createServer({
 //-------UTILITIES FUNCTIONS-----------//
 
 function sendResponse(message,recipient){
-  console.log("Sending msg");
+  //console.log("Sending msg");
   var sendApiPath = "v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
   var response = {};
   response.messaging_type = "RESPONSE";
@@ -121,7 +123,7 @@ function sendResponse(message,recipient){
   //response.message = message;
   //console.log(response);
   //response = JSON.stringify(response);
-  console.log(response);
+  //console.log(response);
   
   var options = {
     host: "graph.facebook.com",
@@ -134,7 +136,15 @@ function sendResponse(message,recipient){
     body: response
   }
   var promesa = new Promise(function(resolve,reject){
-    https.request(options,(res,err)=> {if(res){console.log("response: "+res);resolve(res);}else if(err){console.log("err: "+err);reject(err);}});
+    https.request(options,function(err,res,body){
+      if(!err && res.statusCode === 200){
+        console.log("response: "+res);
+        resolve(res);
+      }else{
+        console.log("statusCode: "+ res.statusCode +", err: "+err);
+        reject(err);
+      }
+    });
   });
   return promesa;
   
