@@ -1,10 +1,12 @@
 "use strict";
 require('dotenv').config();
+
 // Imports dependencies and set up http server
 const
   express = require('express'),
   bodyParser = require('body-parser'),
   fs = require('fs'), 
+  request = require('request'),
   privateKey = fs.readFileSync('privkey.pem'),
   certificate = fs.readFileSync('fullchain.pem'),
   app = express().use(bodyParser.json()), // creates express http server
@@ -48,7 +50,7 @@ app.post('/webhook', (req, res) => {
       
       promesa.then(function(message){
         var nueva = Promise.resolve();
-        nueva = sendResponse(message[0],userPsid).catch(function(err){console.log(err);return;}); 
+        nueva = sendResponse(message[0],userPsid); 
         if(message[1]){ //si tras procesar comando/mensaje/postback bot desea enviar 2 mensajes consecutivos.
           nueva = nueva.then(function(){
             console.log("first sending has been done");
@@ -56,8 +58,8 @@ app.post('/webhook', (req, res) => {
               setTimeout(resolve,1000);
             });
           }).then(function(){
-            return sendResponse(message[1],userPsid).catch(function(err){console.log(err);return;}); 
-          });
+            return sendResponse(message[1],userPsid).catch(function(err){console.log(err);}); 
+          }).catch(function(err){console.log(err);});
         }
       }).catch(function(message){
         console.log("error: " + message);
@@ -117,32 +119,46 @@ https.createServer({
 //-------UTILITIES FUNCTIONS-----------//
 
 function sendResponse(message,recipient){
-  //console.log("Sending msg");
-  var sendApiPath = "/v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
+
+  //var sendApiPath = "/v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
   var response = {};
   response.messaging_type = "RESPONSE";
   response.recipient = {}; response.recipient.id = recipient; 
   response.message = {}; response.message.text = message; 
-  //response.message = message;
-  //console.log(response);
-  //response = JSON.stringify(response);
-  //console.log(response);
-  
+
+  var promesa = new Promise(function(resolve,reject){
+    var request_body = response;
+    request({
+      "uri": "https://graph.facebook.com/v2.6/me/messages",
+      "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
+      "method": "POST",
+      "json": request_body
+    }, (err, res, body) => {
+      if (!err) {
+        console.log('message sent!')
+        resolve("res ok");
+      } else {
+        console.log("Unable to send message:" + err);
+        reject("error.");
+      }
+    }); 
+  });
+  /*
   var options = {
-    hostname: "graph.facebook.com",
-    path: sendApiPath,
-    headers: {
+    hostname: "graph.facebook.com",//v
+    path: sendApiPath,//token mal? ¿no parametros en url para post?
+    headers: {//v
       'contentType': 'application/json'
     },
     //port: '443',
-    method: 'POST',
-    key: privateKey,
-    cert: certificate,
-    body: response
+    method: 'POST',//v
+    key: privateKey,//v
+    cert: certificate,//v
+    body: response//¿json mal?
   }
   var promesa = new Promise(function(resolve,reject){
     console.log("sending request");
-    var req = https.request(options,function(res){
+    var req = https.request(options,function(res){//https -> v
       res.setEncoding("utf8");
       let body = "";
       res.on("data", data => {
@@ -166,7 +182,7 @@ function sendResponse(message,recipient){
     });
     req.end();
   });
+  */
   return promesa;
-  
 }
 
