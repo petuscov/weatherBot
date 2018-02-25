@@ -48,13 +48,16 @@ app.post('/webhook', (req, res) => {
       
       promesa.then(function(message){
         var nueva = Promise.resolve();
-        console.log("msg send attemp...");
         nueva = sendResponse(message[0],userPsid); 
         if(message[1]){ //si tras procesar comando/mensaje/postback bot desea enviar 2 mensajes consecutivos.
-          console.log("second msg send attemp...");
           nueva = nueva.then(function(){
+            console.log("first sending has been done");
+            return new Promise(function(resolve,reject){
+              setTimeout(resolve,1000);
+            });
+          }).then(function(){
             return sendResponse(message[1],userPsid);
-          })
+          });
         }
       }).catch(function(message){
         console.log("error: " + message);
