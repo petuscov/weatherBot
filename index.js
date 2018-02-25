@@ -118,6 +118,7 @@ function sendResponse(message,recipient){
   response.messaging_type = "RESPONSE";
   response.recipient = {}; response.recipient.id = recipient; 
   response.message = {}; response.message.text = message; 
+  //response.message = message;
   //console.log(response);
   //response = JSON.stringify(response);
   console.log(response);
@@ -128,10 +129,12 @@ function sendResponse(message,recipient){
     contentType: 'application/json',
     port: '443',
     method: 'POST',
+    key: privateKey,
+    cert: certificate,
     body: response
   }
   var promesa = new Promise(function(resolve,reject){
-    https.request(options,(res,err)=> {if(res){console.log("response: "+res);resolve(res);}else if(err){reject(err);}});
+    https.request(options,(res,err)=> {if(res){console.log("response: "+res);resolve(res);}else if(err){console.log("err: "+err);reject(err);}});
   });
   return promesa;
   
