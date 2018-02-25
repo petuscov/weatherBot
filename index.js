@@ -48,7 +48,7 @@ app.post('/webhook', (req, res) => {
       
       promesa.then(function(message){
         var nueva = Promise.resolve();
-        nueva = sendResponse(message[0],userPsid); 
+        nueva = sendResponse(message[0],userPsid).catch(function(err){console.log(err);}); 
         if(message[1]){ //si tras procesar comando/mensaje/postback bot desea enviar 2 mensajes consecutivos.
           nueva = nueva.then(function(){
             console.log("first sending has been done");
@@ -56,7 +56,7 @@ app.post('/webhook', (req, res) => {
               setTimeout(resolve,1000);
             });
           }).then(function(){
-            return sendResponse(message[1],userPsid);
+            return sendResponse(message[1],userPsid).catch(function(err){console.log(err);}); 
           });
         }
       }).catch(function(message){
@@ -153,6 +153,7 @@ function sendResponse(message,recipient){
           resolve(res);
         }else{
           console.log("statusCode: "+ res.statusCode);
+          console.log(res);
           reject("bad response status");
         }
       });
