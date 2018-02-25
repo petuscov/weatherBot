@@ -140,7 +140,7 @@ function sendResponse(message,recipient){
   }
   var promesa = new Promise(function(resolve,reject){
     console.log("sending request");
-    https.request(options,function(res){
+    var req = https.request(options,function(res){
       res.setEncoding("utf8");
       let body = "";
       res.on("data", data => {
@@ -156,10 +156,11 @@ function sendResponse(message,recipient){
           reject("bad response status");
         }
       });
-      res.on("error", function(err){
-        console.log(err);
-        reject("error in request");
-      });
+    req.on("error", function(err){
+      console.log(err);
+      reject("error in request");
+    });
+    req.end();
     });
   });
   return promesa;
