@@ -131,7 +131,9 @@ function sendResponse(message,recipient){
   var options = {
     hostname: "graph.facebook.com",
     path: sendApiPath,
-    contentType: 'application/json',
+    headers: {
+      'contentType': 'application/json'
+    },
     port: '443',
     method: 'POST',
     key: privateKey,
