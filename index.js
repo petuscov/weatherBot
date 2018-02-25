@@ -118,7 +118,7 @@ https.createServer({
 
 function sendResponse(message,recipient){
   //console.log("Sending msg");
-  var sendApiPath = "v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
+  var sendApiPath = "/v2.6/me/messages?access_token=" + process.env.PAGE_ACCESS_TOKEN;
   var response = {};
   response.messaging_type = "RESPONSE";
   response.recipient = {}; response.recipient.id = recipient; 
@@ -153,7 +153,7 @@ function sendResponse(message,recipient){
           resolve(res);
         }else{
           console.log("statusCode: "+ res.statusCode);
-          console.log(res);
+          //console.log(res);
           reject("bad response status");
         }
       });
