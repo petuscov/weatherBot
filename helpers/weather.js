@@ -26,13 +26,15 @@ function callweather(ciudadT,fromPostback){
       // The whole response has been received. Print out the result.
       resp.on('end', () => {
         resolve(JSON.parse(data));
+        console.log("ended");
       });
  
     }).on("error", (err) => {
       reject("Error: " + err.message);
     });
  
-  }).then(function(response){
+  });
+  promesa = promesa.then(function(response){
     var datosApi = [];
     
     for(var i=0;i<3;i++){
@@ -70,9 +72,10 @@ function callweather(ciudadT,fromPostback){
           }
         } 
       }
+      console.log("here");
       arrMessages.push(response);
     }
-    return arrMessages;
+    return Promise.resolve(arrMessages);
   }).catch(function(result){
     message = "Wops, algo ha cascado...";
     console.log(result);
