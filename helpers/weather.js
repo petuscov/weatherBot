@@ -28,9 +28,9 @@ function callweather(ciudadT,fromPostback){
         resolve(JSON.parse(data));
       });
  
-      }).on("error", (err) => {
-        reject("Error: " + err.message);
-      });
+    }).on("error", (err) => {
+      reject("Error: " + err.message);
+    });
  
   }).then(function(response){
     var datosApi = [];

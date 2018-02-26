@@ -63,9 +63,11 @@ app.post('/webhook', (req, res) => {
         }
       }).catch(function(message){
         console.log("error: " + message);
+
       });
       
     });
+    res.sendStatus(200);
   } else {
     // Returns a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404);
