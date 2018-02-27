@@ -13,8 +13,8 @@ const
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
   FB_APP_SECRET = process.env.FB_APP_SECRET;
   //routes
-const basicArrays = require("/routes/helpers/basicArrays.js");
-const mainRoute = require("/routes/mainRoute.js");
+const basicArrays = require("./routes/helpers/basicArrays.js");
+const mainRoute = require("./routes/mainRoute.js");
 
 
 const bot = new BootBot({
