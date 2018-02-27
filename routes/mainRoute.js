@@ -98,6 +98,6 @@ var guardarCiudad = (convo,city)=>{
 }
 
 module.exports = {
-  mainConversation : mainConversation,
+  mainConversation : mainConv,
   askForCity: askForCity
 };
