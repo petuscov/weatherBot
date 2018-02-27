@@ -82,9 +82,8 @@ var guardarCiudad = (convo,city)=>{
     var si = arrays.si.find(function(element){return element===text});
     if(si){
       weatherAPI(city).then(function(response){
-        convo.set('city',city).then(()=>{
-          convo.end()
-        });
+        convo.set('city',city);
+        convo.end();
       });
     }
     var no = arrays.no.find(function(element){return element===text});
