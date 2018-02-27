@@ -2,6 +2,7 @@
 const weatherAPI = require("routes/helpers/weather.js");
 const arrays = require("routes/helpers/basicArrays.js");
 const options = { typing: true };
+
 var mainConv = (convo) => {  
   if(convo.get('city')){
     var city = convo.get('city');
@@ -37,9 +38,7 @@ var mainConv = (convo) => {
       convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation",options);
     };
   }
-    convo.ask(question, answer);
-  }
-
+  convo.ask(question, answer);
 };
 
 
