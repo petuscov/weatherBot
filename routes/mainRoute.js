@@ -32,7 +32,7 @@ var mainConv = (convo) => {
       if(no){
         convo.say("Ok...",options).then(()=>{
           askForCity(convo);
-        }
+        });
       }
       convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation",options);
     };
