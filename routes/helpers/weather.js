@@ -41,7 +41,7 @@ function weather(ciudadT){
       datosApi.push(obj);
     }
     message = datosApi;
-    }
+    
     return Promise.resolve(message);
   }).catch(function(result){
     message = "Wops, algo ha cascado...";
