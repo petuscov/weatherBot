@@ -1,7 +1,7 @@
 "use strict";
 const weatherAPI = require("routes/helpers/weather.js");
 const arrays = require("routes/helpers/basicArrays.js");
-
+const options = { typing: true };
 var mainConv = (convo) => {  
   if(convo.get('city')){
     var city = convo.get('city');
@@ -23,18 +23,18 @@ var mainConv = (convo) => {
       var si = arrays.si.find(function(element){return element===text});
       if(si){
         weatherAPI(city).then(function(response){
-          convo.say(JSON.stringify(response)).then(()=>{
+          convo.say(JSON.stringify(response),options).then(()=>{
             convo.end()
           });
         });
       }
       var no = arrays.no.find(function(element){return element===text});
       if(no){
-        convo.say("Ok...").then(()=>{
+        convo.say("Ok...",options).then(()=>{
           askForCity(convo);
         }
       }
-      convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation");
+      convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation",options);
     };
   }
     convo.ask(question, answer);
@@ -46,7 +46,7 @@ var mainConv = (convo) => {
 var askForCity = (convo) =>{
 
   const question = () => {
-    convo.say("What city do you want to know weather for?");
+    convo.say("What city do you want to know weather for?",options);
   };
 
   const answer = (payload, convo) => {
@@ -57,11 +57,11 @@ var askForCity = (convo) =>{
       convo.end();
     }
     weatherAPI(city).then(function(response){
-      convo.say(JSON.stringify(response)).then(()=>{
+      convo.say(JSON.stringify(response),options).then(()=>{
         guardarCiudad(convo,city);
       });
     }).catch(function(err){
-      convo.say(city + " is not a valid city. Im sorry, try again...");
+      convo.say(city + " is not a valid city. Im sorry, try again...",options);
     });
   };
   convo.ask(question, answer);
@@ -69,7 +69,7 @@ var askForCity = (convo) =>{
 
 var guardarCiudad = (convo,city)=>{
    const question = () => {
-    convo.say("Do you want to save the city for future weather requests?");
+    convo.say("Do you want to save the city for future weather requests?",options);
   };
 
   const answer = (payload, convo) => {
@@ -89,11 +89,11 @@ var guardarCiudad = (convo,city)=>{
     }
     var no = arrays.no.find(function(element){return element===text});
     if(no){
-      convo.say("Ok...").then(()=>{
+      convo.say("Ok...",options).then(()=>{
         convo.end()
       }
     }
-    convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation");
+    convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options);
   };
   convo.ask(question, answer);
 }
