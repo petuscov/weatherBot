@@ -30,7 +30,7 @@ bot.hear("ping",(payload,chat)=>{
 bot.hear(basicArrays.ayuda,(payload,chat)=>{
   chat.say("Say 'weather' if you want to know weather for a specific city");
 });
-bot.hear(basicArrays.tiempo,initMenu);
+
 const conversation = (convo) => {
   city = convo.get('city'); //¿almacenar par usuario - ciudad en mysql? 
   if(city){
@@ -47,6 +47,8 @@ const initMenu = (payload, chat) => {
     chat.conversation(conversation)
   });
 };
+
+bot.hear(basicArrays.tiempo,initMenu);
 
 //En el servidor usamos una versión modificada (por nosotros) del framework bootbot.
 bot.start("3000",certificate,privateKey); 
