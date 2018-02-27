@@ -5,9 +5,9 @@ var ayuda = ["ayuda","help","/help","info","/info"];
 var tiempo = ["pronóstico","pronostico","tiempo","weather","/weather"];
 
 module.exports = {
-	cancel = cancel,
-	no = no,
-	si = si,
-	ayuda = ayuda,
-	tiempo = tiempo
+	cancel : cancel,
+	no : no,
+	si : si,
+	ayuda : ayuda,
+	tiempo : tiempo
 }
