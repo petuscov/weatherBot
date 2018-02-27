@@ -1,5 +1,5 @@
 "use strict";
-const weatherAPI = require("./helpers/weather.js");
+const weatherAPI = require("./helpers/weather.js").weather;
 const arrays = require("./helpers/basicArrays.js");
 const options = { typing: true };
 
