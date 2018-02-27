@@ -40,7 +40,7 @@ const conversation = (convo) => {
   }
 }
 
-bot.hear(basicArrays.start(payload,chat)=>{
+bot.hear(basicArrays.start,(payload,chat)=>{
   var message = "Hi, say 'help' for a list of what i can do";
   var options = { typing: true };
   chat.say(message, options)
