@@ -32,7 +32,7 @@ bot.hear(basicArrays.ayuda,(payload,chat)=>{
 });
 
 const conversation = (convo) => {
-  city = convo.get('city'); //¿almacenar par usuario - ciudad en mysql? 
+  var city = convo.get('city'); //¿almacenar par usuario - ciudad en mysql? 
   if(city){
     mainRoute.mainConversation(convo);
   }else{
@@ -44,7 +44,7 @@ const initMenu = (payload, chat) => {
   var message = "Hi, say 'help' for a list of what i can do";
   var options = { typing: true };
   chat.say(message, options).then(() => {
-    chat.conversation(conversation)
+    chat.conversation(conversation);
   });
 };
 
