@@ -23,8 +23,6 @@ const bot = new BootBot({
   appSecret: FB_APP_SECRET 
 });
 
-bot.module(mainConversation);
-
 bot.hear("ping",(payload,chat)=>{
   chat.say('pong');
 });
