@@ -41,7 +41,7 @@ const conversation = (convo) => {
 }
 
 const initMenu = (payload, chat) => {
-  var message = "Hi, say 'help' for a list of what i can do";
+  var message = "Hi, say 'help' for a list of what i can do";//TODO quitar de aqui. No es el lugar.
   var options = { typing: true };
   chat.say(message, options).then(() => {
     chat.conversation(conversation);

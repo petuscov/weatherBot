@@ -55,6 +55,7 @@ var askForCity = (convo) =>{
     if (fin){
       convo.end();
     }
+    var city = text;
     weatherAPI(city).then(function(response){
       convo.say(JSON.stringify(response),options).then(()=>{
         guardarCiudad(convo,city);
