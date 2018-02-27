@@ -3,3 +3,4 @@ privkey.pem
 node_modules
 .env
 fullchain.pem
+package-lock.json
