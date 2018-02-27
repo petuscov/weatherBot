@@ -90,7 +90,7 @@ var guardarCiudad = (convo,city)=>{
     if(no){
       convo.say("Ok...",options).then(()=>{
         convo.end()
-      }
+      });
     }
     convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options);
   };
