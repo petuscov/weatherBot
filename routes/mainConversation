@@ -1,0 +1,66 @@
+"use strict";
+const weatherAPI = require("routes/helpers/weather.js");
+const arrays = require("routes/helpers/basicArrays.js");
+var mainConv = (convo) => {
+  
+  if(convo.get('city')){
+    city = convo.get('city');
+    question = () => (
+      convo.sendGenericTemplate([{
+        title: city,
+        subtitle: "Do you want to know weather for " + city +"?",
+        image_url: "./public/skyline.jpg",
+        buttons: ["Yes!","No"]
+      }])
+    );
+    answer = (payload, convo)=> {
+      if (!payload.message) {convo.end();}
+      var text = payload.message.text.toLowerCase();
+      var fin = arrays.cancel.find(function(element){return element===text});
+      if (fin){
+        convo.end();
+      }
+      var si = arrays.si.find(function(element){return element===text});
+      if(si){
+        
+      }
+      var no = arrays.no.find(function(element){return element===text});
+      if(no){
+
+      }
+      convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation");}
+    };
+    convo.ask(question, answer);
+  }else{
+
+    const question = () => {
+      convo.say("What city do you want to know weather for?");
+    };
+
+    const answer = (payload, convo) => {
+      if (!payload.message){convo.say("humm... i dont understand you.");}
+      var text = payload.message.text.toLowerCase();
+      var fin = arrays.cancel.find(function(element){return element===text});
+      if (fin){
+        convo.end();
+      }
+      const options = { typing: true };
+      const score = convo.get('score') || 0;
+      const currentPokemon = convo.get('currentPokemon').toString();
+      if (payload.message.text === currentPokemon) {
+        convo.set('score', score + 1);
+        convo.say('Correct! Try another one:', options)
+          .then(() => askPokemon(convo));
+      } else {
+        convo.say(`Nope! That Pokémon is #${pokemonID}`, options)
+          .then(() => convo.say(`Your score was: ${score}.`))
+          .then(() => convo.end());
+      }
+    };
+  }
+  
+
+  
+};
+
+module.exports = mainConv;

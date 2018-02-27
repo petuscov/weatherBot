@@ -137,7 +137,7 @@ function sendResponse(message,recipient){
       "json": request_body
     }, (err, res, body) => {
       if (!err) {
-        console.log('message sent!')
+        console.log('message sent!');
         resolve("res ok");
       } else {
         console.log("Unable to send message:" + err);
