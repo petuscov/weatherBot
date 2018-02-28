@@ -54,8 +54,12 @@ const initMenu = (payload, chat) => {
 
 bot.hear(basicArrays.tiempo,initMenu);
 
-bot.on('message', (payload, chat, data) => {//TODO checking
-  console.log(data.captured);//comprobar si el mensaje ya ha sido capturado por otra suscripción. (.captured)
+bot.on('message', (payload, chat, data) => {
+  if(data.captured){
+     var message = "Sry, didnt understand. Say 'help' if you are in troubles";
+    var options = { typing: true };
+    chat.say(message, options)
+  };
 });
 
 //En el servidor usamos una versión modificada (por nosotros) del framework bootbot.

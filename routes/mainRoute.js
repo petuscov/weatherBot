@@ -56,18 +56,21 @@ var askForCity = (convo) =>{
       convo.end();
     }
     var city = text;
-    var promesa = weatherAPI(city).then(function(response){
-      console.log(response);
-      var prom = Promise.resolve();
-      for(element in response){
-        prom = prom.then(()=>convo.say(response[element],options));
-      }//TODO checking
-      prom.then(()=>{
-        guardarCiudad(convo,city);
+    var promesa = weatherAPI(city)
+      .then(function(response){
+        console.log(response);
+        var prom = Promise.resolve();
+        for(element in response){
+          prom = prom.then(()=>convo.say(response[element],options));
+        }//TODO checking
+        prom.then(()=>{
+          guardarCiudad(convo,city);
+        });
+      })
+      .catch(function(err){
+        console.log(err);
+        convo.say(city + " is not a valid city. Im sorry, try again...",options);
       });
-    }).catch(function(err){
-      convo.say(city + " is not a valid city. Im sorry, try again...",options);
-    });
   };
   convo.ask(question, answer);
 }
