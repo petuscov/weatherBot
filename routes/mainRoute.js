@@ -41,7 +41,7 @@ var mainConv = (convo,city) => {
 };
 
 
-var askForCity = (convo,idUser) =>{
+var askForCity = (convo) =>{
 
   const question = () => {
     convo.say("What city do you want to know weather for?",options);
@@ -65,7 +65,7 @@ var askForCity = (convo,idUser) =>{
         });
        });*/
         convo.say(response,options).then(()=>{
-          guardarCiudad(convo,city,idUser);
+          guardarCiudad(convo,city);
         });
       })
       .catch(function(err){
@@ -77,7 +77,7 @@ var askForCity = (convo,idUser) =>{
   convo.ask(question, answer);
 }
 
-var guardarCiudad = (convo,city,idUser)=>{
+var guardarCiudad = (convo,city)=>{
    const question = () => {
     convo.say({
       text:"Do you want to save the city for future weather requests?",
@@ -105,7 +105,7 @@ var guardarCiudad = (convo,city,idUser)=>{
     var si = arrays.si.find(function(element){return element===text});
     if(si){
       convo.say("Ok, I have saved "+ city +" as your city.",options).then(()=>{
-        store[idUser] = Object.assign(store[idUser] || {},{
+        store[convo.get("id")] = Object.assign(store[convo.get("id")] || {},{
           city: city
         });
         convo.end();
