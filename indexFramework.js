@@ -49,7 +49,7 @@ bot.hear(basicArrays.start,(payload,chat)=>{
 
 
 const initMenu = (payload, chat) => {
-  conversation.set("id", payload.sender.id);
+  chat.conversation.set("id", payload.sender.id);
   chat.conversation(conversation);
 };
 
