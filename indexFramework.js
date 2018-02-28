@@ -15,7 +15,7 @@ const
   //routes
 const basicArrays = require("./routes/helpers/basicArrays.js");
 const mainRoute = require("./routes/mainRoute.js");
-
+const store = require("./routes/helpers/store.js");
 
 const bot = new BootBot({
   accessToken: PAGE_ACCESS_TOKEN,
@@ -49,6 +49,7 @@ bot.hear(basicArrays.start,(payload,chat)=>{
 
 
 const initMenu = (payload, chat) => {
+  console.log(payload);
   chat.conversation(conversation);
 };
 
