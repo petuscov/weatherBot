@@ -4,9 +4,8 @@ const arrays = require("./helpers/basicArrays.js");
 const store = require("./helpers/store.js");
 const options = { typing: true };
 
-var mainConv = (convo) => {  
-  if(convo.get('city')){
-    var city = convo.get('city');
+var mainConv = (convo,city) => {  
+ 
     question = () => (
       convo.sendGenericTemplate([{
         title: city,
@@ -38,12 +37,11 @@ var mainConv = (convo) => {
       }
       convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation",options);
     };
-  }
-  convo.ask(question, answer);
+    convo.ask(question, answer);
 };
 
 
-var askForCity = (convo) =>{
+var askForCity = (convo,idUser) =>{
 
   const question = () => {
     convo.say("What city do you want to know weather for?",options);
@@ -67,7 +65,7 @@ var askForCity = (convo) =>{
         });
        });*/
         convo.say(response,options).then(()=>{
-          guardarCiudad(convo,city);
+          guardarCiudad(convo,city,idUser);
         });
       })
       .catch(function(err){
@@ -79,7 +77,7 @@ var askForCity = (convo) =>{
   convo.ask(question, answer);
 }
 
-var guardarCiudad = (convo,city)=>{
+var guardarCiudad = (convo,city,idUser)=>{
    const question = () => {
     convo.say({
       text:"Do you want to save the city for future weather requests?",
@@ -107,7 +105,9 @@ var guardarCiudad = (convo,city)=>{
     var si = arrays.si.find(function(element){return element===text});
     if(si){
       convo.say("Ok, I'll save that city",options).then(()=>{
-        convo.set('city',city);
+        store[idUser] = Object.assign(store[idUser] || {},{
+          city: city
+        });
         convo.end();
       });
     }else{

@@ -31,12 +31,12 @@ bot.hear(basicArrays.ayuda,(payload,chat)=>{
   chat.say("Say 'weather' if you want to know weather for a specific city");
 });
 
-const conversation = (convo) => {
-  var city = convo.get('city'); //¿almacenar par usuario - ciudad en mysql? 
+const conversation = (convo,idUser) => {
+  var city = store[idUser] ? store[idUser].city : ""; 
   if(city){
-    mainRoute.mainConversation(convo);
+    mainRoute.mainConversation(convo,city);
   }else{
-    mainRoute.askForCity(convo);
+    mainRoute.askForCity(convo,idUser);
   }
 }
 
@@ -49,8 +49,7 @@ bot.hear(basicArrays.start,(payload,chat)=>{
 
 
 const initMenu = (payload, chat) => {
-  console.log(payload);
-  chat.conversation(conversation);
+  chat.conversation(conversation,payload.sender.id);
 };
 
 bot.hear(basicArrays.tiempo,initMenu);
