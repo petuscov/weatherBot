@@ -58,13 +58,16 @@ var askForCity = (convo) =>{
     var city = text;
     var promesa = weatherAPI(city)
       .then(function(response){
-       convo.say(response[0],options).then(()=>{
+       /*convo.say(response[0],options).then(()=>{
         convo.say(response[1],options).then(()=>{
           convo.say(response[2],options).then(()=>{
             guardarCiudad(convo,city);
-          });;
+          });
         });
-       });
+       });*/
+        convo.say(response,options).then(()=>{
+          guardarCiudad(convo,city);
+        });
       })
       .catch(function(err){
         convo.say(city + " is not a valid city. Im sorry, try again...",options);
@@ -75,7 +78,13 @@ var askForCity = (convo) =>{
 
 var guardarCiudad = (convo,city)=>{
    const question = () => {
-    convo.say("Do you want to save the city for future weather requests?",options);
+    convo.say({
+      text:"Do you want to save the city for future weather requests?",
+      buttons: [
+        { type: 'postback', title: 'Yes', payload: 'yes' },
+        { type: 'postback', title: 'No', payload: 'no' }
+      ]
+    },options);
   };
 
   const answer = (payload, convo) => {
@@ -91,14 +100,16 @@ var guardarCiudad = (convo,city)=>{
         convo.set('city',city);
         convo.end();
       });
+    }else{
+      var no = arrays.no.find(function(element){return element===text});
+      if(no){
+        convo.say("Ok...",options).then(()=>{
+          convo.end()
+        });
+      }else{
+        convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options);
+      }
     }
-    var no = arrays.no.find(function(element){return element===text});
-    if(no){
-      convo.say("Ok...",options).then(()=>{
-        convo.end()
-      });
-    }
-    convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options);
   };
   convo.ask(question, answer);
 }
