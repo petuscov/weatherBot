@@ -32,7 +32,6 @@ bot.hear(basicArrays.ayuda,(payload,chat)=>{
 });
 
 const conversation = (convo,idUser) => {
-  console.log("searching: " +idUser);
   var city = store[idUser] ? store[idUser].city : ""; 
   if(city){
     mainRoute.mainConversation(convo,city);
@@ -50,6 +49,8 @@ bot.hear(basicArrays.start,(payload,chat)=>{
 
 
 const initMenu = (payload, chat) => {
+  console.log("id: "+ payload.sender.id);
+  console.log(payload);
   chat.conversation(conversation,payload.sender.id);
 };
 

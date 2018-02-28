@@ -108,7 +108,6 @@ var guardarCiudad = (convo,city,idUser)=>{
         store[idUser] = Object.assign(store[idUser] || {},{
           city: city
         });
-        console.log("saved: "+ idUser);
         convo.end();
       });
     }else{
