@@ -88,8 +88,14 @@ var guardarCiudad = (convo,city)=>{
   };
 
   const answer = (payload, convo) => {
-    if (!payload.message){convo.end();}
-    var text = payload.message.text.toLowerCase();
+    var text = "";
+    if (!payload.message && !payload.postback){convo.end();}
+    if (payload.message){
+      text = payload.message.text.toLowerCase();
+    }else{
+      text = payload.postback.text;
+    }
+  
     var fin = arrays.cancel.find(function(element){return element===text});
     if (fin){
       convo.end();
