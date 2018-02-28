@@ -93,6 +93,7 @@ var guardarCiudad = (convo,city)=>{
     if (payload.message){
       text = payload.message.text.toLowerCase();
     }else{
+      console.log(payload);
       text = payload.postback.text;
     }
   
@@ -113,7 +114,9 @@ var guardarCiudad = (convo,city)=>{
           convo.end()
         });
       }else{
-        convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options);
+        convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options).then(()=>{
+          convo.end();
+        });
       }
     }
   };
