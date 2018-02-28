@@ -58,14 +58,13 @@ var askForCity = (convo) =>{
     var city = text;
     var promesa = weatherAPI(city)
       .then(function(response){
-        console.log(response);
-        var prom = Promise.resolve();
-        for(var element in response){
-          prom = prom.then(()=>convo.say(response[element],options));
-        }//TODO checking
-        prom.then(()=>{
-          guardarCiudad(convo,city);
+       convo.say(response[0],options).then(()=>{
+        convo.say(response[1],options).then(()=>{
+          convo.say(response[2],options).then(()=>{
+            guardarCiudad(convo,city);
+          });;
         });
+       });
       })
       .catch(function(err){
         convo.say(city + " is not a valid city. Im sorry, try again...",options);
