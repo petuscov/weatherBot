@@ -104,10 +104,11 @@ var guardarCiudad = (convo,city,idUser)=>{
     }
     var si = arrays.si.find(function(element){return element===text});
     if(si){
-      convo.say("Ok, I'll save that city",options).then(()=>{
+      convo.say("Ok, I have saved "+ city +" as your city.",options).then(()=>{
         store[idUser] = Object.assign(store[idUser] || {},{
           city: city
         });
+        console.log("saved: "+ idUser);
         convo.end();
       });
     }else{
