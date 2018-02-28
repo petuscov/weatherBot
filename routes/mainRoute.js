@@ -57,6 +57,7 @@ var askForCity = (convo) =>{
     }
     var city = text;
     var promesa = weatherAPI(city).then(function(response){
+      console.log(response);
       var prom = Promise.resolve();
       for(element in response){
         prom = prom.then(()=>convo.say(response[element],options));

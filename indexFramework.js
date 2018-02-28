@@ -55,7 +55,7 @@ const initMenu = (payload, chat) => {
 bot.hear(basicArrays.tiempo,initMenu);
 
 bot.on('message', (payload, chat) => {//TODO checking
-  console.log(payload);//comprobar si el mensaje ya ha sido capturado por otra suscripción. (.captured)
+  console.log(chat);//comprobar si el mensaje ya ha sido capturado por otra suscripción. (.captured)
 });
 
 //En el servidor usamos una versión modificada (por nosotros) del framework bootbot.
