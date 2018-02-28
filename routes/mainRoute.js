@@ -1,7 +1,7 @@
 "use strict";
 const weatherAPI = require("./helpers/weather.js").weather;
 const arrays = require("./helpers/basicArrays.js");
-const store = require("./routes/helpers/store.js");
+const store = require("./helpers/store.js");
 const options = { typing: true };
 
 var mainConv = (convo) => {  
