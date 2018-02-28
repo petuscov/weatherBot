@@ -60,7 +60,7 @@ var askForCity = (convo) =>{
       .then(function(response){
         console.log(response);
         var prom = Promise.resolve();
-        for(element in response){
+        for(var element in response){
           prom = prom.then(()=>convo.say(response[element],options));
         }//TODO checking
         prom.then(()=>{
@@ -68,7 +68,6 @@ var askForCity = (convo) =>{
         });
       })
       .catch(function(err){
-        console.log(err);
         convo.say(city + " is not a valid city. Im sorry, try again...",options);
       });
   };
