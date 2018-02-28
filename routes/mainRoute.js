@@ -56,8 +56,12 @@ var askForCity = (convo) =>{
       convo.end();
     }
     var city = text;
-    weatherAPI(city).then(function(response){
-      convo.say(JSON.stringify(response),options).then(()=>{
+    var promesa = weatherAPI(city).then(function(response){
+      var prom = Promise.resolve();
+      for(element in response){
+        prom = prom.then(()=>convo.say(response[element],options));
+      }//TODO checking
+      prom.then(()=>{
         guardarCiudad(convo,city);
       });
     }).catch(function(err){
@@ -81,7 +85,7 @@ var guardarCiudad = (convo,city)=>{
     }
     var si = arrays.si.find(function(element){return element===text});
     if(si){
-      weatherAPI(city).then(function(response){
+      convo.say("Ok, I'll save that city",options).then(()=>{
         convo.set('city',city);
         convo.end();
       });

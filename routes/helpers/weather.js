@@ -8,8 +8,6 @@
 function weather(ciudadT){
   var ciudad = "Bilbao"; //temporal// ciudad = ciudadT
   var direccion = "http://api.openweathermap.org/data/2.5/forecast?q="+ciudad+"&cnt=3&&APPID=e8638bc5d9a41ddc3c698bf4eba969a0";
-  var arrMessages = [];
-  var message = "";
   var promesa = new Promise(function(resolve,reject){
     http.get(direccion, (resp) => {
       var data = '';
@@ -30,18 +28,23 @@ function weather(ciudadT){
  
   });
   promesa = promesa.then(function(response){
+    
+    
     var datosApi = [];
-    
     for(var i=0;i<3;i++){
-      var obj = "";
-      obj += "Día "+ (i+1) +": ";
-      obj += parseInt((response.list[i].main.temp))-273,15;
-      obj += " Cº, con tiempo " + response.list[i].weather[0].main;
-      datosApi.push(obj);
+      var msg = "";
+      switch(i){
+        case 0: msg = "Para hoy se esperan ";break;
+        case 1: msg = "Para mañana se esperan ";break;
+        case 2: msg = "Y para pasado mañana se esperan ";break;
+      }
+      msg += parseInt((response.list[i].main.temp))-273,15;
+      msg += " Cº, con tiempo " + response.list[i].weather[0].main +".";
+      datosApi.push(msg);
     }
-    message = datosApi;
+    var arrayMessages = datosApi;
     
-    return Promise.resolve(message);
+    return Promise.resolve(arrayMessages);
   }).catch(function(result){
     message = "Wops, algo ha cascado...";
     console.log(result);
