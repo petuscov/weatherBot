@@ -70,8 +70,9 @@ var askForCity = (convo) =>{
         });
       })
       .catch(function(err){
-        convo.say(city + " is not a valid city. Im sorry, try again. (or say cancel to end this conversation)",options);
-        askForCity(convo);
+        convo.say(city + " is not a valid city. Im sorry, try again. (or say cancel to end this conversation)",options).then(()=>{
+          askForCity(convo);
+        });
       });
   };
   convo.ask(question, answer);
