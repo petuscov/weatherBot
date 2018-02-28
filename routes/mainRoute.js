@@ -70,7 +70,8 @@ var askForCity = (convo) =>{
         });
       })
       .catch(function(err){
-        convo.say(city + " is not a valid city. Im sorry, try again...",options);
+        convo.say(city + " is not a valid city. Im sorry, try again. (or say cancel to end this conversation)",options);
+        askForCity(convo);
       });
   };
   convo.ask(question, answer);
@@ -93,8 +94,8 @@ var guardarCiudad = (convo,city)=>{
     if (payload.message){
       text = payload.message.text.toLowerCase();
     }else{
-      console.log(payload);
-      text = payload.postback.text;
+      //console.log(payload);
+      text = payload.postback.payload;
     }
   
     var fin = arrays.cancel.find(function(element){return element===text});
