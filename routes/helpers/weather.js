@@ -6,7 +6,7 @@
 * @return: string - a message
 */
 function weather(ciudadT){
-  var ciudad = "Bilbao"; //temporal// ciudad = ciudadT
+  var ciudad = ciudadT;
   var direccion = "http://api.openweathermap.org/data/2.5/forecast?q="+ciudad+"&cnt=3&&APPID=e8638bc5d9a41ddc3c698bf4eba969a0";
   var promesa = new Promise(function(resolve,reject){
     http.get(direccion, (resp) => {
@@ -48,7 +48,7 @@ function weather(ciudadT){
   }).catch(function(result){
     message = "Wops, algo ha cascado...";
     console.log(result);
-    return message; //mensaje de error
+    return Promise.reject(message); //mensaje de error
   });
   return promesa;
 }
