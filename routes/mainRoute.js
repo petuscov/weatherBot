@@ -135,7 +135,7 @@ var guardarCiudad = (convo,city)=>{
       var no = arrays.no.find(function(element){return element===text});
       if(no){
         convo.say("Ok...",options).then(()=>{
-          convo.end()
+          convo.end();
         });
       }else{
         convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options).then(()=>{
@@ -146,8 +146,9 @@ var guardarCiudad = (convo,city)=>{
   };
   if(store.getData(convo.userId)){
     if(store.getData(convo.userId).city!==city){
-      console.log(store.getData(convo.userId).city +" - "+ city);
       convo.ask(question, answer);
+    }else{
+      convo.end();
     }
   }else{
     convo.ask(question, answer);
