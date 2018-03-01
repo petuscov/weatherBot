@@ -144,10 +144,8 @@ var guardarCiudad = (convo,city)=>{
       }
     }
   };
-  if(store.getData(convo.userId)){
-    if(store.getData(convo.userId).city!==city){
-      convo.ask(question, answer);
-    }
+  if(store.getData(convo.userId).city!==city){
+    convo.ask(question, answer);
   }
 }
 
