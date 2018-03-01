@@ -35,7 +35,7 @@ var mainConv = (convo,city) => {
         weatherAPI(city)
         .then(function(response){
           convo.say(response,options).then(()=>{
-            guardarCiudad(convo);
+            guardarCiudad(convo,city);
           });
         })
         .catch(function(err){
