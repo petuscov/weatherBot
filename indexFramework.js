@@ -67,6 +67,7 @@ bot.start("3000",certificate,privateKey);
 
 ////// For image serving.
 
+var path = require('path');
 var bodyParser = require('body-parser');
 var https = require("https");
 var express = require('express');
