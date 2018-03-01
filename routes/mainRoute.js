@@ -10,7 +10,7 @@ var mainConv = (convo,city) => {
       convo.sendGenericTemplate([{
         title: city,
         subtitle: "Do you want to know weather for " + city +"?",
-        image_url: "https://www.bots.ikasten.io:3001/skyline.png",//"./../public/skyline.png",
+        image_url: "https://bots.ikasten.io:3001/skyline.png",//"./../public/skyline.png",
         buttons: [
           { type: 'postback', title: 'Yes!', payload: 'si' },
           { type: 'postback', title: 'No', payload: 'no' }
@@ -144,7 +144,9 @@ var guardarCiudad = (convo,city)=>{
       }
     }
   };
-  convo.ask(question, answer);
+  if(store.getData(convo.userId)!==city){
+    convo.ask(question, answer);
+  }
 }
 
 module.exports = {
