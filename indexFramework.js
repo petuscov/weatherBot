@@ -32,8 +32,7 @@ bot.hear(basicArrays.ayuda,(payload,chat)=>{
 });
 
 const conversation = (convo) => {
-  console.log(store);
-  var city = store[convo.userId] ? store[convo.userId].city : ""; 
+  var city = store.getData(convo.userId) ? store.getData(convo.userId).city : ""; 
   if(city){
     mainRoute.mainConversation(convo,city);
   }else{
