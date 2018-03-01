@@ -10,9 +10,9 @@ var mainConv = (convo,city) => {
       convo.sendGenericTemplate([{
         title: city,
         subtitle: "Do you want to know weather for " + city +"?",
-        image_url: "./public/skyline.jpg",
+        image_url: "../public/skyline.jpg",
         buttons: ["Yes!","No"]
-      }])
+      }]);
     };
     const answer = (payload, convo) => {
       if (!payload.message) {convo.end();}
@@ -28,14 +28,16 @@ var mainConv = (convo,city) => {
             convo.end()
           });
         });
+      }else{
+        var no = arrays.no.find(function(element){return element===text});
+        if(no){
+          convo.say("Ok...",options).then(()=>{
+            askForCity(convo);
+          });
+        }else{
+          convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation",options);
+        }
       }
-      var no = arrays.no.find(function(element){return element===text});
-      if(no){
-        convo.say("Ok...",options).then(()=>{
-          askForCity(convo);
-        });
-      }
-      convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation",options);
     };
     convo.ask(question, answer);
 };
@@ -120,7 +122,7 @@ var guardarCiudad = (convo,city)=>{
         });
       }else{
         convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options).then(()=>{
-          convo.end();
+          //convo.end();
         });
       }
     }
