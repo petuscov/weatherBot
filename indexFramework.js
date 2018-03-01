@@ -66,7 +66,9 @@ bot.on('message', (payload, chat, data) => {
 bot.start("3000",certificate,privateKey); 
 
 ////// For image serving.
+
 var bodyParser = require('body-parser');
+var https = require("https");
 var express = require('express');
 var app = express().use(bodyParser.json()); // creates express http server
 app.get("/skyline.png", (req, res) => {
