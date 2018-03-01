@@ -10,7 +10,7 @@ var mainConv = (convo,city) => {
       convo.sendGenericTemplate([{
         title: city,
         subtitle: "Do you want to know weather for " + city +"?",
-        image_url: "https://www.bots.ikasten.io:3000/skyline2.png",//"./../public/skyline.png",
+        image_url: "https://www.bots.ikasten.io:3001/skyline2.png",//"./../public/skyline.png",
         buttons: ["Yes!","No"]
       }]);
     };
