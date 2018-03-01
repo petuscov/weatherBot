@@ -6,14 +6,14 @@ const options = { typing: true };
 
 var mainConv = (convo,city) => {  
  
-    question = () => (
+    question = () => {
       convo.sendGenericTemplate([{
         title: city,
         subtitle: "Do you want to know weather for " + city +"?",
         image_url: "./public/skyline.jpg",
         buttons: ["Yes!","No"]
       }])
-    );
+    };
     answer = (payload, convo) => {
       if (!payload.message) {convo.end();}
       var text = payload.message.text.toLowerCase();
