@@ -65,6 +65,20 @@ bot.on('message', (payload, chat, data) => {
 //En el servidor usamos una versión modificada (por nosotros) del framework bootbot.
 bot.start("3000",certificate,privateKey); 
 
+////// For image serving.
+
+var express = require('express');
+var app = express().use(bodyParser.json()), // creates express http server
+app.get("/skyline.png", (req, res) => {
+  res.sendFile("./public/skyline2.png");
+});
+https.createServer({
+   key: privateKey,
+   cert: certificate
+}, app).listen("3000");
+
+///////
+
 module.exports = {
   bot:bot
 }

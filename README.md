@@ -1,9 +1,9 @@
 Weather Bot
 =========================
 
-Seek for `@nombreBot` in facebook messenger, and interact with me!
+Seek for `@BotTiempo` in facebook messenger, and interact with me!
 
-Due to problems with facebook, we are experiencing troubles in bot deployment. Keep fighting!
+Currently we are mixing castilian and english, we are improving this to make BotTiempo available in both languages separately.
 
 
 More info
