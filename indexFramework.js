@@ -72,7 +72,7 @@ var https = require("https");
 var express = require('express');
 var app = express().use(bodyParser.json()); // creates express http server
 app.get("/skyline.png", (req, res) => {
-  res.sendFile("./public/skyline2.png");
+  res.sendFile("./public/skyline.png");
 });
 https.createServer({
    key: privateKey,

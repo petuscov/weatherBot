@@ -10,7 +10,7 @@ var mainConv = (convo,city) => {
       convo.sendGenericTemplate([{
         title: city,
         subtitle: "Do you want to know weather for " + city +"?",
-        image_url: "https://www.bots.ikasten.io:3001/skyline2.png",//"./../public/skyline.png",
+        image_url: "https://www.bots.ikasten.io:3001/skyline.png",//"./../public/skyline.png",
         buttons: [
           { type: 'postback', title: 'Yes!', payload: 'si' },
           { type: 'postback', title: 'No', payload: 'no' }
@@ -32,11 +32,19 @@ var mainConv = (convo,city) => {
       }
       var si = arrays.si.find(function(element){return element===text});
       if(si){
-        weatherAPI(city).then(function(response){
-          convo.say(JSON.stringify(response),options).then(()=>{
-            convo.end()
+        weatherAPI(city)
+        .then(function(response){
+          convo.say(response,options).then(()=>{
+            guardarCiudad(convo);
           });
         });
+        .catch(function(err){
+        convo.say("Something went wrong...",options).then(()=>{
+          convo.say("D:").then(()=>{
+            convo.end();
+          });
+        });
+      });
       }else{
         var no = arrays.no.find(function(element){return element===text});
         if(no){
