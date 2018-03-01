@@ -37,7 +37,7 @@ var mainConv = (convo,city) => {
           convo.say(response,options).then(()=>{
             guardarCiudad(convo);
           });
-        });
+        })
         .catch(function(err){
         convo.say("Something went wrong...",options).then(()=>{
           convo.say("D:").then(()=>{
