@@ -6,7 +6,7 @@ const options = { typing: true };
 
 var mainConv = (convo,city) => {  
  
-    question = () => {
+    const question = () => {
       convo.sendGenericTemplate([{
         title: city,
         subtitle: "Do you want to know weather for " + city +"?",
@@ -14,7 +14,7 @@ var mainConv = (convo,city) => {
         buttons: ["Yes!","No"]
       }])
     };
-    answer = (payload, convo) => {
+    const answer = (payload, convo) => {
       if (!payload.message) {convo.end();}
       var text = payload.message.text.toLowerCase();
       var fin = arrays.cancel.find(function(element){return element===text});
