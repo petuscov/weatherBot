@@ -11,12 +11,21 @@ var mainConv = (convo,city) => {
         title: city,
         subtitle: "Do you want to know weather for " + city +"?",
         image_url: "https://www.bots.ikasten.io:3001/skyline2.png",//"./../public/skyline.png",
-        buttons: ["Yes!","No"]
+        buttons: [
+          { type: 'postback', title: 'Yes!', payload: 'si' },
+          { type: 'postback', title: 'No', payload: 'no' }
+        ]
       }]);
     };
     const answer = (payload, convo) => {
-      if (!payload.message) {convo.end();}
-      var text = payload.message.text.toLowerCase();
+      var text = "";
+      if (!payload.message && !payload.postback){convo.end();}
+      if (payload.message){
+        text = payload.message.text.toLowerCase();
+      }else{
+        //console.log(payload);
+        text = payload.postback.payload;
+      }
       var fin = arrays.cancel.find(function(element){return element===text});
       if (fin){
         convo.end();
