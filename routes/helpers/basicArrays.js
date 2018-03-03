@@ -16,5 +16,7 @@ module.exports = {
 	tiempo : tiempo,
 	startES : startES,
 	startEN : startEN,
+	english : english,
+	spanish : spanish,
 	language : language
 }
