@@ -80,7 +80,7 @@ bot.hear(basicArrays.language,(payload,chat)=>{
 bot.on('message', (payload, chat, data) => {
   if(!data.captured){
     var language = store.getData(payload.sender.id).language || "EN";
-    var message = language[language].notHandled;
+    var message = translations[language].notHandled;
     var options = { typing: true };
     chat.say(message, options)
   };
