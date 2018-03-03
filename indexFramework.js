@@ -34,18 +34,18 @@ bot.hear("ping",(payload,chat)=>{
 
 //start responses
 bot.hear(basicArrays.startES,(payload,chat)=>{
-  userData = store.getData(payload.sender.id);
+  var userData = store.getData(payload.sender.id);
   store.setData(payload.sender.id,Object.assign(userData||{},{language:"ES"}));
-  language = store.getData(payload.sender.id).language || "ES";
+  var language = store.getData(payload.sender.id).language || "ES";
   var message = translations[language].hi;
   var options = { typing: true };
   chat.say(message, options)
 });
 
 bot.hear(basicArrays.startEN,(payload,chat)=>{
-  userData = store.getData(payload.sender.id);
+  var userData = store.getData(payload.sender.id);
   store.setData(payload.sender.id,Object.assign(userData||{},{language:"EN"}));
-  language = store.getData(payload.sender.id).language || "EN";
+  var language = store.getData(payload.sender.id).language || "EN";
   var message = translations[language].hi;
   var options = { typing: true };
   chat.say(message, options)
@@ -53,7 +53,7 @@ bot.hear(basicArrays.startEN,(payload,chat)=>{
 
 //help response
 bot.hear(basicArrays.ayuda,(payload,chat)=>{
-  language = store.getData(payload.sender.id).language || "EN";
+  var language = store.getData(payload.sender.id).language || "EN";
   chat.say(translations[language].help);
 });
 
