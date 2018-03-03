@@ -6,7 +6,7 @@ const translations = require("./helpers/translations.js");
 const options = { typing: true };
 
 var mainConv = (convo,city) => {  
-    var userData = store.getData(payload.sender.id) || {};
+    var userData = store.getData(convo.userId) || {};
     var language = userData.language || "EN";
     const question = () => {
       convo.sendGenericTemplate([{
@@ -62,7 +62,7 @@ var mainConv = (convo,city) => {
 
 
 var askForCity = (convo) =>{
-  var userData = store.getData(payload.sender.id) || {};
+  var userData = store.getData(convo.userId) || {};
   var language = userData.language || "EN";
   const question = () => {
     convo.say(translations[language].mainQuestion,options);
@@ -99,7 +99,7 @@ var askForCity = (convo) =>{
 }
 
 var guardarCiudad = (convo,city)=>{
-  var userData = store.getData(payload.sender.id) || {};
+  var userData = store.getData(convo.userId) || {};
   var language = userData.language || "EN";
   const question = () => {
   convo.say({
