@@ -6,7 +6,8 @@ const translations = require("./helpers/translations.js");
 const options = { typing: true };
 
 var mainConv = (convo,city) => {  
-    var language = store.getData(payload.sender.id).language || "EN";
+    var userData = store.getData(payload.sender.id) || {};
+    var language = userData.language || "EN";
     const question = () => {
       convo.sendGenericTemplate([{
         title: city,
@@ -61,7 +62,8 @@ var mainConv = (convo,city) => {
 
 
 var askForCity = (convo) =>{
-  var language = store.getData(payload.sender.id).language || "EN";
+  var userData = store.getData(payload.sender.id) || {};
+  var language = userData.language || "EN";
   const question = () => {
     convo.say(translations[language].mainQuestion,options);
   };
@@ -97,15 +99,16 @@ var askForCity = (convo) =>{
 }
 
 var guardarCiudad = (convo,city)=>{
-   var language = store.getData(payload.sender.id).language || "EN";
-   const question = () => {
-    convo.say({
-      text:translations[language].saveCity,
-      buttons: [
-        { type: 'postback', title: translations[language].yes, payload: 'yes' },
-        { type: 'postback', title: translations[language].no, payload: 'no' }
-      ]
-    },options);
+  var userData = store.getData(payload.sender.id) || {};
+  var language = userData.language || "EN";
+  const question = () => {
+  convo.say({
+    text:translations[language].saveCity,
+    buttons: [
+      { type: 'postback', title: translations[language].yes, payload: 'yes' },
+      { type: 'postback', title: translations[language].no, payload: 'no' }
+    ]
+  },options);
   };
 
   const answer = (payload, convo) => {

@@ -3,7 +3,8 @@ const store = require("./helpers/store.js");
 const translations = require("./helpers/translations.js");
 const options = { typing: true };
 var languageRoute = (convo) => {  
- 	var language = store.getData(payload.sender.id).language || "EN";
+	var userData = store.getData(payload.sender.id) || {};
+ 	var language = userData.language || "EN";
     const question = () => {
       convo.sendGenericTemplate([{
         title: translations[language].language,
