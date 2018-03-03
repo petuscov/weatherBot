@@ -2,18 +2,19 @@
 const weatherAPI = require("./helpers/weather.js").weather;
 const arrays = require("./helpers/basicArrays.js");
 const store = require("./helpers/store.js");
+const translations = require("./helpers/translations.js");
 const options = { typing: true };
 
 var mainConv = (convo,city) => {  
- 
+    var language = store.getData(payload.sender.id).language || "EN";
     const question = () => {
       convo.sendGenericTemplate([{
         title: city,
-        subtitle: "Do you want to know weather for " + city +"?",
+        subtitle: translations[language].questionSettedCity + city +"?",
         image_url: "https://bots.ikasten.io:3001/skyline.png",//"./../public/skyline.png",
         buttons: [
-          { type: 'postback', title: 'Yes!', payload: 'si' },
-          { type: 'postback', title: 'No', payload: 'no' }
+          { type: 'postback', title: translations[language].yes, payload: 'si' },
+          { type: 'postback', title: translations[language].no, payload: 'no' }
         ]
       }]);
     };
@@ -23,7 +24,6 @@ var mainConv = (convo,city) => {
       if (payload.message){
         text = payload.message.text.toLowerCase();
       }else{
-        //console.log(payload);
         text = payload.postback.payload;
       }
       var fin = arrays.cancel.find(function(element){return element===text});
@@ -39,7 +39,7 @@ var mainConv = (convo,city) => {
           });
         })
         .catch(function(err){
-        convo.say("Something went wrong...",options).then(()=>{
+        convo.say(translations[language].error,options).then(()=>{
           convo.say("D:").then(()=>{
             convo.end();
           });
@@ -48,11 +48,11 @@ var mainConv = (convo,city) => {
       }else{
         var no = arrays.no.find(function(element){return element===text});
         if(no){
-          convo.say("Ok...",options).then(()=>{
+          convo.say(translations[language].ok,options).then(()=>{
             askForCity(convo);
           });
         }else{
-          convo.say("humm... i dont understand you. Type 'cancel' to exit this beautiful conversation",options);
+          convo.say(translations[language].toExitConv,options);
         }
       }
     };
@@ -61,9 +61,9 @@ var mainConv = (convo,city) => {
 
 
 var askForCity = (convo) =>{
-
+  var language = store.getData(payload.sender.id).language || "EN";
   const question = () => {
-    convo.say("What city do you want to know weather for?",options);
+    convo.say(translations[language].mainQuestion,options);
   };
 
   const answer = (payload, convo) => {
@@ -88,7 +88,7 @@ var askForCity = (convo) =>{
         });
       })
       .catch(function(err){
-        convo.say(city + " is not a valid city. Im sorry, try again. (or say cancel to end this conversation)",options).then(()=>{
+        convo.say(city + translations[language].notValidCity,options).then(()=>{
           askForCity(convo);
         });
       });
@@ -97,12 +97,13 @@ var askForCity = (convo) =>{
 }
 
 var guardarCiudad = (convo,city)=>{
+   var language = store.getData(payload.sender.id).language || "EN";
    const question = () => {
     convo.say({
-      text:"Do you want to save the city for future weather requests?",
+      text:translations[language].saveCity,
       buttons: [
-        { type: 'postback', title: 'Yes', payload: 'yes' },
-        { type: 'postback', title: 'No', payload: 'no' }
+        { type: 'postback', title: translations[language].yes, payload: 'yes' },
+        { type: 'postback', title: translations[language].no, payload: 'no' }
       ]
     },options);
   };
@@ -123,22 +124,22 @@ var guardarCiudad = (convo,city)=>{
     }
     var si = arrays.si.find(function(element){return element===text});
     if(si){
-      convo.say("Ok, I have saved "+ city +" as your city.",options).then(()=>{
+      convo.say(translations[language].savedCity1+ city +translations[language].savedCity2,options).then(()=>{
         var obj = store.getData(convo.userId);
         obj = Object.assign(obj || {},{
           city: city
         });
-        store.update(convo.userId,obj); 
+        store.setData(convo.userId,obj); 
         convo.end();
       });
     }else{
       var no = arrays.no.find(function(element){return element===text});
       if(no){
-        convo.say("Ok...",options).then(()=>{
+        convo.say(translations[language].ok,options).then(()=>{
           convo.end();
         });
       }else{
-        convo.say("humm... i dont understand you. Type 'cancel' to exit this exciting conversation",options).then(()=>{
+        convo.say(translations[language].toExitConv,options).then(()=>{
           guardarCiudad(convo);
         });
       }

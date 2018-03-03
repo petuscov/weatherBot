@@ -12,10 +12,13 @@ const
   certificate = fs.readFileSync('fullchain.pem'),
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
   FB_APP_SECRET = process.env.FB_APP_SECRET;
-  //routes
+
+//routes
 const basicArrays = require("./routes/helpers/basicArrays.js");
 const mainRoute = require("./routes/mainRoute.js");
 const store = require("./routes/helpers/store.js");
+const translationsFile = require("./routes/helpers/translations.js");
+const languageRoute = require("./routes/languageRoute.js");
 
 const bot = new BootBot({
   accessToken: PAGE_ACCESS_TOKEN,
@@ -23,14 +26,38 @@ const bot = new BootBot({
   appSecret: FB_APP_SECRET 
 });
 
+//--------------------------------//
+
 bot.hear("ping",(payload,chat)=>{
   chat.say('pong');
 });
 
-bot.hear(basicArrays.ayuda,(payload,chat)=>{
-  chat.say("Say 'weather' if you want to know weather for a specific city");
+//start responses
+bot.hear(basicArrays.startES,(payload,chat)=>{
+  userData = store.getData(payload.sender.id);
+  store.setData(payload.sender.id,Object.assign(userData||{},language:"ES"));
+  language = store.getData(payload.sender.id).language || "ES";
+  var message = translationsFile[language].hi;
+  var options = { typing: true };
+  chat.say(message, options)
 });
 
+bot.hear(basicArrays.startEN,(payload,chat)=>{
+  userData = store.getData(payload.sender.id);
+  store.setData(payload.sender.id,Object.assign(userData||{},language:"EN"));
+  language = store.getData(payload.sender.id).language || "EN";
+  var message = translationsFile[language].hi;
+  var options = { typing: true };
+  chat.say(message, options)
+});
+
+//help response
+bot.hear(basicArrays.ayuda,(payload,chat)=>{
+  language = store.getData(payload.sender.id).language || "EN";
+  chat.say(translationsFile[language].help);
+});
+
+//main conversation
 const conversation = (convo) => {
   var city = store.getData(convo.userId) ? store.getData(convo.userId).city : ""; 
   if(city){
@@ -39,30 +66,27 @@ const conversation = (convo) => {
     mainRoute.askForCity(convo);
   }
 }
-
-bot.hear(basicArrays.start,(payload,chat)=>{
-  var message = "Hi, say 'help' for a list of what i can do";
-  var options = { typing: true };
-  chat.say(message, options)
-});
-
-
-
 const initMenu = (payload, chat) => {
   chat.conversation(conversation);
 };
-
 bot.hear(basicArrays.tiempo,initMenu);
 
+//language conversation
+bot.hear(basicArrays.language,(payload,chat)=>{
+  chat.conversation(languageRoute);
+});
+
+//default message
 bot.on('message', (payload, chat, data) => {
   if(!data.captured){
-     var message = "Sry, didnt understand. Say 'help' if you are in troubles";
+    var language = store.getData(payload.sender.id).language || "EN";
+    var message = languageRoute[language].notHandled;
     var options = { typing: true };
     chat.say(message, options)
   };
 });
 
-//En el servidor usamos una versión modificada (por nosotros) del framework bootbot.
+//En el servidor usamos una versión modificada (por nosotros) del framework bootbot (para aceptar certificado y clave).
 bot.start("3000",certificate,privateKey); 
 
 ////// For image serving.

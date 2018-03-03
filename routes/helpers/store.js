@@ -13,7 +13,7 @@ var getData = function(id){
 	return store[id];
 }
 module.exports = {
-	update: update,
+	setData: update,
 	getData: getData
 }
 //teniendo en cuenta que guardamos muy pocos datos y muy simples, no hace falta una store 'compleja'. (e.g redux)
