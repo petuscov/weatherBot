@@ -17,7 +17,7 @@ const
 const basicArrays = require("./routes/helpers/basicArrays.js");
 const mainRoute = require("./routes/mainRoute.js");
 const store = require("./routes/helpers/store.js");
-const translationsFile = require("./routes/helpers/translations.js");
+const translations = require("./routes/helpers/translations.js");
 const languageRoute = require("./routes/languageRoute.js");
 
 const bot = new BootBot({
@@ -37,7 +37,7 @@ bot.hear(basicArrays.startES,(payload,chat)=>{
   userData = store.getData(payload.sender.id);
   store.setData(payload.sender.id,Object.assign(userData||{},{language:"ES"}));
   language = store.getData(payload.sender.id).language || "ES";
-  var message = translationsFile[language].hi;
+  var message = translations[language].hi;
   var options = { typing: true };
   chat.say(message, options)
 });
@@ -46,7 +46,7 @@ bot.hear(basicArrays.startEN,(payload,chat)=>{
   userData = store.getData(payload.sender.id);
   store.setData(payload.sender.id,Object.assign(userData||{},{language:"EN"}));
   language = store.getData(payload.sender.id).language || "EN";
-  var message = translationsFile[language].hi;
+  var message = translations[language].hi;
   var options = { typing: true };
   chat.say(message, options)
 });
@@ -54,7 +54,7 @@ bot.hear(basicArrays.startEN,(payload,chat)=>{
 //help response
 bot.hear(basicArrays.ayuda,(payload,chat)=>{
   language = store.getData(payload.sender.id).language || "EN";
-  chat.say(translationsFile[language].help);
+  chat.say(translations[language].help);
 });
 
 //main conversation
