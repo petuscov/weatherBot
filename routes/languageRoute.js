@@ -1,5 +1,6 @@
 "use strict";
 const store = require("./helpers/store.js");
+const arrays = require("./helpers/basicArrays.js");
 const translations = require("./helpers/translations.js");
 const options = { typing: true };
 var languageRoute = (convo) => {  
@@ -9,6 +10,7 @@ var languageRoute = (convo) => {
       convo.sendGenericTemplate([{
         title: translations[language].language,
         subtitle: translations[language].selectLanguage,
+        image_url: "https://bots.ikasten.io:3001/idioma.jpg",
         buttons: [
           { type: 'postback', title: translations[language].english, payload: 'English' },
           { type: 'postback', title: translations[language].spanish, payload: 'Spanish' }

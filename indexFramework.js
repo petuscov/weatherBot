@@ -100,6 +100,9 @@ var app = express().use(bodyParser.json()); // creates express http server
 app.get("/skyline.png", (req, res) => {
   res.sendFile(path.join(__dirname,"./public/skyline.png"));
 });
+app.get("/idioma.jpg", (req, res) => {
+  res.sendFile(path.join(__dirname,"./public/idioma.jpg"));
+});
 https.createServer({
    key: privateKey,
    cert: certificate
