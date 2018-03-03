@@ -34,14 +34,14 @@ var languageRoute = (convo) => {
       	var data = store.getData(convo.userId);
        	store.setData(convo.userId,Object.assign(data||{},{language:"EN"}));
 
-       	convo.say(	translations[language].languageSet).then(function(){
+       	convo.say(	translations["EN"].languageSet).then(function(){
        		convo.end();
        	});
       }else{
         var spanish = arrays.spanish.find(function(element){return element===text});
         if(spanish){
         	store.setData(convo.userId,Object.assign(data||{},{language:"ES"}));
-       		convo.say(translations[language].languageSet).then(function(){
+       		convo.say(translations["ES"].languageSet).then(function(){
        			convo.end();
        		});
         }else{

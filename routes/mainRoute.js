@@ -119,7 +119,6 @@ var guardarCiudad = (convo,city)=>{
     if (payload.message){
       text = payload.message.text.toLowerCase();
     }else{
-      //console.log(payload);
       text = payload.postback.payload;
     }
   
