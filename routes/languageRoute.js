@@ -29,7 +29,7 @@ var languageRoute = (convo) => {
       var english = arrays.english.find(function(element){return element===text});
       if(english){
       	var data = store.getData(convo.userId);
-       	store.setData(convo.userId,Object.assign(data||{},language:"EN"));
+       	store.setData(convo.userId,Object.assign(data||{},{language:"EN"}));
 
        	convo.say(	translations[language].languageSet).then(function(){
        		convo.end();
@@ -37,7 +37,7 @@ var languageRoute = (convo) => {
       }else{
         var spanish = arrays.spanish.find(function(element){return element===text});
         if(spanish){
-        	store.setData(convo.userId,Object.assign(data||{},language:"ES"));
+        	store.setData(convo.userId,Object.assign(data||{},{language:"ES"}));
        		convo.say(translations[language].languageSet).then(function(){
        			convo.end();
        		});

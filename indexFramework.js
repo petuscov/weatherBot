@@ -35,7 +35,7 @@ bot.hear("ping",(payload,chat)=>{
 //start responses
 bot.hear(basicArrays.startES,(payload,chat)=>{
   userData = store.getData(payload.sender.id);
-  store.setData(payload.sender.id,Object.assign(userData||{},language:"ES"));
+  store.setData(payload.sender.id,Object.assign(userData||{},{language:"ES"}));
   language = store.getData(payload.sender.id).language || "ES";
   var message = translationsFile[language].hi;
   var options = { typing: true };
@@ -44,7 +44,7 @@ bot.hear(basicArrays.startES,(payload,chat)=>{
 
 bot.hear(basicArrays.startEN,(payload,chat)=>{
   userData = store.getData(payload.sender.id);
-  store.setData(payload.sender.id,Object.assign(userData||{},language:"EN"));
+  store.setData(payload.sender.id,Object.assign(userData||{},{language:"EN"}));
   language = store.getData(payload.sender.id).language || "EN";
   var message = translationsFile[language].hi;
   var options = { typing: true };
