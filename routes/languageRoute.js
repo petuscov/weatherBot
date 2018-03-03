@@ -12,8 +12,8 @@ var languageRoute = (convo) => {
         subtitle: translations[language].selectLanguage,
         image_url: "https://bots.ikasten.io:3001/idioma.jpg",
         buttons: [
-          { type: 'postback', title: translations[language].english, payload: 'English' },
-          { type: 'postback', title: translations[language].spanish, payload: 'Spanish' }
+          { type: 'postback', title: translations[language].english, payload: 'english' },
+          { type: 'postback', title: translations[language].spanish, payload: 'spanish' }
         ]
       }]);
     };
@@ -45,7 +45,9 @@ var languageRoute = (convo) => {
        			convo.end();
        		});
         }else{
-          convo.say(translations[language].toExitConv,options);
+          convo.say(translations[language].toExitConv,options).then(function(){
+            languageRoute(convo);
+          });;
         }
       }
     };

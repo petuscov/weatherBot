@@ -53,7 +53,9 @@ var mainConv = (convo,city) => {
             askForCity(convo);
           });
         }else{
-          convo.say(translations[language].toExitConv,options);
+          convo.say(translations[language].toExitConv,options).then(function(){
+            mainConv(convo);
+          });
         }
       }
     };
