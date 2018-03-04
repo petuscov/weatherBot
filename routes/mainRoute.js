@@ -144,7 +144,7 @@ var guardarCiudad = (convo,city)=>{
         });
       }else{
         convo.say(translations[language].toExitConv,options).then(()=>{
-          guardarCiudad(convo);
+          guardarCiudad(convo,city);
         });
       }
     }
