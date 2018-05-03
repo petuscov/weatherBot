@@ -3,7 +3,7 @@ Weather Bot
 
 Seek for `@BotTiempo` in facebook messenger, and interact with me!
 
-Currently we are mixing castilian and english, we are improving this to make BotTiempo available in both languages separately.
+Currently we support both castilian and english, we dont have any inprovements planned for BotTiempo at the moment. 
 
 
 More info
