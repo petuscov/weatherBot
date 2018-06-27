@@ -10,7 +10,7 @@ const
   privateKey = fs.readFileSync('privkey.pem'),
   certificate = fs.readFileSync('fullchain.pem'),
   app = express().use(bodyParser.json()), // creates express http server
-  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
+  PAGE_ACCESS_TOKEN = process.env.TOKEN,//PAGE_ACCESS_TOKEN
   //checkCommand = require('helpers/mainHelper');
   mainHelper = require("./helpers/mainHelper"),
   https = require("https");
@@ -53,7 +53,7 @@ app.post('/webhook', (req, res) => {
         nueva = sendResponse(message[0],userPsid); 
         if(message[1]){ //si tras procesar comando/mensaje/postback bot desea enviar 2 mensajes consecutivos.
           nueva = nueva.then(function(){
-            console.log("first sending has been done");
+            //console.log("first sending has been done");
             return new Promise(function(resolve,reject){
               setTimeout(resolve,1000);
             });
@@ -78,7 +78,7 @@ app.post('/webhook', (req, res) => {
 //Initial verification
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
-  console.log("initial verification");
+  //console.log("initial verification");
   // Your verify token. Should be a random string.
   var VERIFY_TOKEN = PAGE_ACCESS_TOKEN;
     
@@ -137,7 +137,7 @@ function sendResponse(message,recipient){
       "json": request_body
     }, (err, res, body) => {
       if (!err) {
-        console.log('message sent!');
+        //console.log('message sent!');
         resolve("res ok");
       } else {
         console.log("Unable to send message:" + err);
