@@ -53,7 +53,8 @@ bot.hear(basicArrays.startEN,(payload,chat)=>{
 
 //help response
 bot.hear(basicArrays.ayuda,(payload,chat)=>{
-  var language = store.getData(payload.sender.id).language || "EN";
+  var userInfo = store.getData(payload.sender.id);
+  var language = userInfo ? userInfo.language || "EN" : "EN";
   chat.say(translations[language].help);
 });
 
