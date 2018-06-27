@@ -1,3 +1,5 @@
+//DEPRECATED. USE INDEXFRAMEWORK.JS INSTEAD.
+
 "use strict";
 require('dotenv').config();
 
